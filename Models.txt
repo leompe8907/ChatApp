@@ -1,0 +1,49 @@
+django.contrib.auth.models:
+1. AbstractBaseUser:
+Es una clase abstracta que define los campos y métodos básicos para un usuario en Django.
+Campos:
+  username: Nombre de usuario único para el usuario.
+  email: Correo electrónico del usuario.
+  password: Contraseña del usuario.
+  is_staff: Indica si el usuario es miembro del personal (administrador).
+  is_active: Indica si el usuario está activo.
+  is_superuser: Indica si el usuario es un superusuario (administrador con todos los permisos).
+  last_login: Fecha y hora de la última vez que el usuario se autenticó.
+  Métodos:
+  get_username(): Obtiene el nombre de usuario del usuario.
+  has_perm(): Verifica si el usuario tiene un permiso específico.
+  has_module_perms(): Verifica si el usuario tiene permisos para una aplicación específica.
+  set_password(): Establece la contraseña del usuario.
+  check_password(): Verifica la contraseña del usuario.
+
+2. BaseUserManager:
+Es un gestor de usuarios personalizado que se utiliza con AbstractBaseUser.
+Métodos:
+  create_user(): Crea y guarda un nuevo usuario.
+  create_superuser(): Crea y guarda un nuevo superusuario.
+
+3. PermissionsMixin:
+Es una clase mixta que proporciona permisos a un modelo.
+Métodos:
+  has_perm(): Verifica si el usuario tiene un permiso específico.
+  has_module_perms(): Verifica si el usuario tiene permisos para una aplicación específica.
+  get_user_permissions(): Obtiene todos los permisos del usuario.
+  get_group_permissions(): Obtiene todos los permisos de los grupos a los que pertenece el usuario.
+
+Explicacion de:
+
+create_user(self, email, password=None, **extra_fields):
+  Crea y guarda un nuevo usuario regular.
+    Pasos:
+    1-Comprueba si se ha proporcionado un correo electrónico, lanzándose un error si no es así.
+    2-Normaliza el correo electrónico para uniformizar su formato.
+    3-Crea una instancia del modelo de usuario con el correo electrónico y los campos extra.
+    4-Establece la contraseña del usuario (encriptada).
+    5-Guarda el usuario en la base de datos.
+    6-Devuelve el usuario creado.
+
+create_superuser(self, email, password=None, **extra_fields):
+  Crea y guarda un nuevo superusuario con privilegios administrativos completos.
+    Pasos:
+      1-Establece los campos is_staff e is_superuser a True en los campos extra.
+      2-Reutiliza el método create_user para crear el superusuario con los campos ya configurados.

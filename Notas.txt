@@ -1,0 +1,4 @@
+Activar el entorno virtual:
+Abres una terminar CMD desde la carpeta raiz del proyecto ("CHATAPP") vas la carpeta backend y en la terminar tipeas venv\Scripts\activate
+Desactivar el entorno virtual:
+desde la terminar CMD donde se activo el entorno virtual tipeas deactivate
