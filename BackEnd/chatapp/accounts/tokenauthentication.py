@@ -12,7 +12,7 @@ User = get_user_model()
 class JWTAuthentication(BaseAuthentication):
 
     def authenticate(self, request):
-        token = self.extract_token(request=request)  # Pasar el objeto request como argumento
+        token = self.extract_token(request=request)
         if token is None:
             return None
         try:
@@ -20,7 +20,7 @@ class JWTAuthentication(BaseAuthentication):
             self.verify_token(payload=payload)
 
             user_id = payload["id"]
-            user = User.objects.get(id=user_id)  # 'objects' en lugar de 'objets'
+            user = User.objects.get(id=user_id)
             return user
         except (InvalidTokenError, ExpiredSignatureError, User.DoesNotExist):
             raise AuthenticationFailed("Invalid Token")
@@ -33,7 +33,7 @@ class JWTAuthentication(BaseAuthentication):
         if current_time > exp_timestamp:
             raise ExpiredSignatureError("Token Expired")
 
-    def extract_token(self, request):  # Recibir el objeto request
+    def extract_token(self, request):
         auth_header = request.headers.get('Authorization')
         if auth_header and auth_header.startswith('Bearer'):
             return auth_header.split(" ")[1]
@@ -41,7 +41,7 @@ class JWTAuthentication(BaseAuthentication):
 
     @staticmethod
     def generate_token(payload):
-        expiration = datetime.now() + timedelta(hours=24)  # 'expiration' en lugar de 'expiation'
+        expiration = datetime.now() + timedelta(hours=24)
         payload["exp"] = expiration
         token = jwt.encode(payload=payload, key=settings.SECRET_KEY, algorithm="HS256")
         return token
